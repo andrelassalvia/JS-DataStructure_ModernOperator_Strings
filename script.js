@@ -33,14 +33,11 @@ const restaurant = {
       close: 24,
     },
   },
-};
 
-restaurant.orderDelivery({
-  time: '22:30',
-  address: 'Via del Sol',
-  starterIndex: 2,
-  mainIndex: 0,
-});
+  orderPasta: function (ing1, ing2, ing3) {
+    console.log(`Here the pasta with ${ing1}, ${ing2} and ${ing3}`);
+  },
+};
 
 /*
 // ==== DESTRUCTURING ARRAYS ==== //
@@ -119,3 +116,47 @@ const goodNewArray = [1, 2, ...arr];
 console.log(goodNewArray); //[1, 2, 7, 8, 9]
 
 // mas o spread operator possui mais funcoes
+console.log(...goodNewArray); //1 2 7 8 9
+
+// Portanto, spread operator util quando queremos fazer uma nova constante puxando elemetos de outra constante
+const newMenu = [...restaurant.mainMenu, 'gnocchi'];
+console.log(...newMenu); // Pizza Pasta Risotto gnocchi
+
+// copy array
+const mainMenuCopy = [...restaurant.mainMenu];
+console.log(mainMenuCopy); // ['Pizza', 'Pasta', 'Risotto']
+
+// join 2 arrays or more
+const menu = [...restaurant.starterMenu, ...restaurant.mainMenu];
+console.log(menu); // ['Focaccia', 'Bruschetta', 'Garlic Bread', 'Caprese Salad', 'Pizza', 'Pasta', 'Risotto']
+
+// Iterables: arrays, strings, maps, sets. But NOT OBJECTS.
+// We can use spread operator in all iterables.
+
+// Strings
+const str = 'Jonas';
+const letters = [...str];
+console.log(letters); // ['J', 'o', 'n', 'a', 's']
+
+// A usefull function example
+// const ingredients = [
+//   prompt("Let's make a pasta! Ingredient 1?"),
+//   prompt('Ingredient 2?'),
+//   prompt('Ingredient 3?'),
+// ];
+// console.log(ingredients); // ['onion', 'molho', 'xurizo']
+
+// restaurant.orderPasta(...ingredients);
+
+// Objects
+const newRestaurant = {
+  foundIn: 1998,
+  ...restaurant,
+  founder: 'Giuseppe',
+};
+console.log(newRestaurant);
+
+const copyRestaurante = { ...restaurant };
+copyRestaurante.name = 'Ristorante Roma';
+console.log(copyRestaurante.name); //
+console.log(restaurant.name);
