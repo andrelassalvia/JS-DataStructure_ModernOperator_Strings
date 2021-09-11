@@ -37,6 +37,11 @@ const restaurant = {
   orderPasta: function (ing1, ing2, ing3) {
     console.log(`Here the pasta with ${ing1}, ${ing2} and ${ing3}`);
   },
+
+  orderPizza: function (mainIngredient, ...othersIngredient) {
+    console.log(mainIngredient);
+    console.log(othersIngredient);
+  },
 };
 
 /*
@@ -72,7 +77,7 @@ console.log(i, j, k);
 const [p = 1, q = 1, r = 1] = [8, 9];
 console.log(p, q, r); // se nao houver valor assume 1. Util quando nao sabemos o tamanho final que vira de array
 */
-
+// =============================================================================================================== //
 /*
 // ==== DESTRUCTURING OBJECTS ==== //
 const { name, categories, openingHours } = restaurant;
@@ -103,7 +108,8 @@ const {
 } = openingHours;
 console.log(o, c);
 */
-
+// =============================================================================================================== //
+/*
 // ==== THE SPREAD OPERATOR ==== //
 // to expand an array into all its elements, unpacking all elements in one.
 
@@ -160,3 +166,52 @@ const copyRestaurante = { ...restaurant };
 copyRestaurante.name = 'Ristorante Roma';
 console.log(copyRestaurante.name); //
 console.log(restaurant.name);
+*/
+// =============================================================================================================== //
+
+// ==== REST PATTERN AND PARAMETERS ==== //
+// It does the opposite of spread operator
+// it collect multiple element and condese them into an array
+
+// SPREAD because on the right  of =
+const arr = [1, 2, ...[3, 4, 5]];
+console.log(...arr); //1 2 3 4 5
+
+// REST because on the left of =
+const [a, b, ...others] = [1, 2, 3, 4, 5];
+console.log(a, b, others); // 1 2 (3) [3, 4, 5]
+
+const [pizza, , risotto, ...outros] = [
+  ...restaurant.mainMenu,
+  ...restaurant.starterMenu,
+];
+console.log(pizza, risotto, outros); // Pizza Risotto (4) ['Focaccia', 'Bruschetta', 'Garlic Bread', 'Caprese Salad']
+
+// Objects
+const { sat, ...weekdays } = restaurant.openingHours;
+console.log(weekdays); // {thu: {…}, fri: {…}} - print only weekdays
+
+// functions
+// const add = function (...numbers) {
+//   console.log(numbers);
+// };
+// add(2, 3); // [2, 3]
+// add(1, 5, 4, 7, 8); // [1, 5, 4, 7, 8]
+// add(5, 4, 7, 5, 23, 5, 4, 5, 8, 5); // [5, 4, 7, 5, 23, 5, 4, 5, 8, 5]
+
+const add = function (...numbers) {
+  let sum = 0;
+  for (let i = 0; i < numbers.length; i++) {
+    const element = numbers[i];
+    sum += element;
+  }
+  console.log(sum);
+};
+add(2, 3); // 5
+add(1, 5, 4, 7, 8); // 25
+add(5, 4, 7, 5, 23, 5, 4, 5, 8, 5); // 71
+
+const x = [25, 7, 8, 9, 10];
+add(...x); // 59
+
+restaurant.orderPizza('mushrooms', 'olive', 'onion', 'cheese'); //mushrooms (3) ['olive', 'onion', 'cheese']
