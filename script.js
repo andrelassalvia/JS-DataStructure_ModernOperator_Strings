@@ -168,7 +168,7 @@ console.log(copyRestaurante.name); //
 console.log(restaurant.name);
 */
 // =============================================================================================================== //
-
+/*
 // ==== REST PATTERN AND PARAMETERS ==== //
 // It does the opposite of spread operator
 // it collect multiple element and condese them into an array
@@ -215,3 +215,44 @@ const x = [25, 7, 8, 9, 10];
 add(...x); // 59
 
 restaurant.orderPizza('mushrooms', 'olive', 'onion', 'cheese'); //mushrooms (3) ['olive', 'onion', 'cheese']
+*/
+
+// =============================================================================================================== //
+// ==== SHORT CIRCUIT LOGICAL OPERATORS ==== //
+// Use any data-type returns any data-type
+
+// OR operator
+// Quando mais de 1 valor for True o js retorna o primeiro deles.
+console.log('---------OR------------');
+console.log(3 || 'Jonas'); // 3 - acha o primeiro verdadeiro
+console.log('' || 'Jonas'); // Jonas - acha o primeiro verdadeiro
+console.log(0 || true); // true - acha o primeiro verdadeiro
+console.log(undefined || null); // null - acha o ultimo falso
+
+// A pratical instance
+const guests1 = restaurant.guests ? restaurant.guests : 10;
+console.log(guests1); // 10
+
+// mas podemos escrever de forma mais simples
+const guest2 = restaurant.guest || 12;
+console.log(guest2); //12
+
+// AND operator
+// funciona de forma contraria ao OR
+// vai achar o ultimo verdadeiro se todos forem verdadeiros
+console.log('-----------AND-------------');
+console.log(3 && 'Jonas'); // Jonas - acha o ultimo verdadeiro
+console.log('' && 'Jonas'); // '' - se ha algum falso a sentenca e falsa e retorna o primeiro falso
+console.log(0 && true); // 0 - se ha algum falso a sentenca e falsa e retorna o primeiro falso
+console.log(undefined && null); // undefined - se ha algum falso a sentenca e falsa e retorna o primeiro falso
+console.log('' && undefined && null && 0); // '' - se ha algum falso a sentenca e falsa e retorna o primeiro falso
+console.log('Hello' && 23 && null && true); // null - se ha algum falso a sentenca e falsa e retorna o primeiro falso
+
+// Practical example
+
+if (restaurant.orderPizza) {
+  restaurant.orderPizza('mushrooms', 'spinach');
+}
+
+// podemos escrever assim
+restaurant.orderPizza && restaurant.orderPizza('mushrooms', 'spinach');
