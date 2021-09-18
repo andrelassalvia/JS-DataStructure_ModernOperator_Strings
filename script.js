@@ -47,7 +47,7 @@ const restaurant = {
 /*
 // ==== DESTRUCTURING ARRAYS ==== //
 const arr = [2, 3, 4];
-// Podemos declarar as variaveis como se fosseuma array. Parece mas nao é array. É chamado DESTRUCTURING ARRAY
+// Podemos declarar as variaveis como se fosse uma array. Parece mas nao é array. É chamado DESTRUCTURING ARRAY
 const [x, y, z] = arr;
 console.log(x, y, z);
 
@@ -217,6 +217,7 @@ add(...x); // 59
 restaurant.orderPizza('mushrooms', 'olive', 'onion', 'cheese'); //mushrooms (3) ['olive', 'onion', 'cheese']
 */
 
+/*
 // =============================================================================================================== //
 // ==== SHORT CIRCUIT LOGICAL OPERATORS ==== //
 // Use any data-type returns any data-type
@@ -256,3 +257,15 @@ if (restaurant.orderPizza) {
 
 // podemos escrever assim
 restaurant.orderPizza && restaurant.orderPizza('mushrooms', 'spinach');
+*/
+
+// =============================================================================================================== //
+// ==== The Nullish Coalescing Operator (??) ==== //
+
+restaurant.guestNumbers = 0;
+const guest = restaurant.guestNumbers || 10;
+console.log(guest); // 10
+
+// Nullish: NULL and undefined (NOT 0 or '')
+const newGuest = restaurant.guestNumbers ?? 10;
+console.log(newGuest); // 0
