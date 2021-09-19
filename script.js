@@ -5,33 +5,52 @@ const flights =
   '_Delayed_Departure;fao93766109;txl2133758440;11:25+_Arrival;bru0943384722;fao93766109;11:45+_Delayed_Arrival;hel7439299980;fao93766109;12:05+_Departure;fao93766109;lis2323639855;12:30';
 
 // Data needed for first part of the section
+const [mon, tue, wed, thu, fri, sat, sun] = [
+  'mon',
+  'tue',
+  'wed',
+  'thu',
+  'fri',
+  'sat',
+  'sun',
+];
+
+const openingHours = {
+  thu: {
+    open: 12,
+    close: 22,
+  },
+  fri: {
+    open: 11,
+    close: 23,
+  },
+  sat: {
+    open: 0, // Open 24 hours
+    close: 24,
+  },
+  [`day-${2 + 4}`]: {
+    // we can make math calcs in the object
+    open: 0,
+    close: 12 + 12,
+  },
+};
 const restaurant = {
   name: 'Classico Italiano',
   location: 'Via Angelo Tavanti 23, Firenze, Italy',
   categories: ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'],
   starterMenu: ['Focaccia', 'Bruschetta', 'Garlic Bread', 'Caprese Salad'],
   mainMenu: ['Pizza', 'Pasta', 'Risotto'],
-  order: function (starterIndex, mainIndex) {
+
+  // enhanced ES6 objects:
+  openingHours, // we can call an external object by writing it name.
+
+  order(starterIndex, mainIndex) {
     return [this.starterMenu[starterIndex], this.mainMenu[mainIndex]];
   },
   orderDelivery: function ({ starterIndex, mainIndex, time, address }) {
     console.log(
       `Order Received! Starter: ${this.starterMenu[starterIndex]}, Main: ${this.mainMenu[mainIndex]}. Time: ${time} and address: ${address}`
     );
-  },
-  openingHours: {
-    thu: {
-      open: 12,
-      close: 22,
-    },
-    fri: {
-      open: 11,
-      close: 23,
-    },
-    sat: {
-      open: 0, // Open 24 hours
-      close: 24,
-    },
   },
 
   orderPasta: function (ing1, ing2, ing3) {
@@ -258,7 +277,7 @@ if (restaurant.orderPizza) {
 // podemos escrever assim
 restaurant.orderPizza && restaurant.orderPizza('mushrooms', 'spinach');
 */
-
+/*
 // =============================================================================================================== //
 // ==== The Nullish Coalescing Operator (??) ==== //
 
@@ -269,3 +288,69 @@ console.log(guest); // 10
 // Nullish: NULL and undefined (NOT 0 or '')
 const newGuest = restaurant.guestNumbers ?? 10;
 console.log(newGuest); // 0
+*/
+
+/*
+// =============================================================================================================== //
+// ==== The New FOR OF Loops ==== //
+const menu = [...restaurant.mainMenu, ...restaurant.starterMenu];
+// traditional way
+for (let i = 0; i < menu.length; i++) {
+  const element = menu[i];
+  console.log(`Price of ${element} is ok!!!`);
+}
+// new way
+for (const item of menu) console.log(`New way to print ${item}`);
+// if I want to see the i element
+for (const item of menu.entries()) console.log(item); // entries return a pair of key=>value for each element of the array.
+console.log([...menu.entries()]);
+for (const item of menu.entries()) {
+  console.log(`${item[0] + 1}:${item[1]}`);
+}
+// but we can do it better using the Destructuring Elements of array
+for (const [i, el] of menu.entries()) {
+  console.log(`${i}:${el}`);
+}
+*/
+
+// =============================================================================================================== //
+// ==== ENHANCED OBJECT LITERALS ==== //
+// There is 3 new ways to write literals objects
+// Look at the line n 44 how to call an external object.
+// Look at the line n 46 a new way to write a method.
+// Look at the line n 31 to check a calc in the object.
+
+// =============================================================================================================== //
+// ==== OPTIONAL CHAINING ==== //
+console.log(restaurant.openingHours.fri.open); // we can create a chain to retrieve a value
+// but if we write a day without a openingHours we will receive a error message
+console.log(restaurant.openingHours.mon); //undefined
+// console.log(restaurant.openingHours.mon.open); // error: cannot read undefined
+
+// so we can treat it with a if statement
+if (restaurant.openingHours.mon) console.log(restaurant.openingHours.mon.open); // nokthing written
+// but imagine that openingHours also could be optional. We must check if it exists first.
+if (restaurant.openingHours && restaurant.openingHours.mon)
+  console.log(restaurant.openingHours.mon.open); // nokthing written
+// But if we have a lot to check it will be impossible.
+// We can use the OPTIONAL CHAINING to fix it
+// We put a ? in the property that we are checking
+console.log(restaurant.openingHours.mon?.open); // undefined -- Means only if mon exists the open property will be read.
+// and we can have multiple optionals chaining
+console.log(restaurant.openingHours?.mon?.open); // undefined
+
+// Example:
+const days = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
+for (const day of days) {
+  const open = restaurant.openingHours[day]?.open ?? 'closed';
+
+  console.log(`On ${day} the restaurant will open at ${open}.`);
+}
+// Methods
+console.log(restaurant.order?.(0, 1) ?? 'Method does not exist.');
+console.log(restaurant.orderRisotto?.(0, 1) ?? 'Method does not exist.');
+
+// arrays
+const users = [{ name: 'Jonas', email: 'jonas@qquercoisa.com' }];
+console.log(users[0]?.name ?? 'User does not exist!');
+console.log(users[1]?.name ?? 'User does not exist!');
