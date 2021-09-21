@@ -45,6 +45,7 @@ const restaurant = {
   openingHours, // we can call an external object by writing it name.
 
   order(starterIndex, mainIndex) {
+    // new way to write a method
     return [this.starterMenu[starterIndex], this.mainMenu[mainIndex]];
   },
   orderDelivery: function ({ starterIndex, mainIndex, time, address }) {
@@ -320,6 +321,7 @@ for (const [i, el] of menu.entries()) {
 // Look at the line n 46 a new way to write a method.
 // Look at the line n 31 to check a calc in the object.
 
+/*
 // =============================================================================================================== //
 // ==== OPTIONAL CHAINING ==== //
 console.log(restaurant.openingHours.fri.open); // we can create a chain to retrieve a value
@@ -354,3 +356,34 @@ console.log(restaurant.orderRisotto?.(0, 1) ?? 'Method does not exist.');
 const users = [{ name: 'Jonas', email: 'jonas@qquercoisa.com' }];
 console.log(users[0]?.name ?? 'User does not exist!');
 console.log(users[1]?.name ?? 'User does not exist!');
+*/
+
+// =============================================================================================================== //
+// ==== Looping Objects: Object Keys, Values, and Entries ==== //
+
+// KEYS
+const properties = Object.keys(openingHours);
+console.log(properties);
+console.log(`We are open ${properties.length} days for week`);
+
+for (const days of Object.keys(openingHours)) {
+  console.log(days); // thu, fri, sat, day-6
+}
+
+let openStr = `We are open ${properties.length} days per week: `;
+for (const days of properties) {
+  openStr += `${days}, `;
+}
+console.log(openStr);
+
+// VALUES
+const values = Object.values(openingHours);
+for (const days of values) {
+  console.log(days);
+}
+
+// ENTRIES
+const entries = Object.entries(openingHours);
+for (const [key, { open, close }] of entries) {
+  console.log(`On ${key} we open at ${open} and close at ${close}.`);
+}
