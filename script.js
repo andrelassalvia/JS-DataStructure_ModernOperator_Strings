@@ -325,12 +325,12 @@ for (const [i, el] of menu.entries()) {
 // =============================================================================================================== //
 // ==== OPTIONAL CHAINING ==== //
 console.log(restaurant.openingHours.fri.open); // we can create a chain to retrieve a value
-// but if we write a day without a openingHours we will receive a error message
+// but if we write a day without a openingHours we will receive an error message
 console.log(restaurant.openingHours.mon); //undefined
 // console.log(restaurant.openingHours.mon.open); // error: cannot read undefined
 
 // so we can treat it with a if statement
-if (restaurant.openingHours.mon) console.log(restaurant.openingHours.mon.open); // nokthing written
+if (restaurant.openingHours.mon) console.log(restaurant.openingHours.mon.open); // nothing written
 // but imagine that openingHours also could be optional. We must check if it exists first.
 if (restaurant.openingHours && restaurant.openingHours.mon)
   console.log(restaurant.openingHours.mon.open); // nokthing written
@@ -384,6 +384,114 @@ for (const days of values) {
 
 // ENTRIES
 const entries = Object.entries(openingHours);
+console.log(entries);
 for (const [key, { open, close }] of entries) {
   console.log(`On ${key} we open at ${open} and close at ${close}.`);
 }
+
+// =============================================================================================================== //
+// ==== SETS ==== //
+// Set is a collections of unique values
+
+let orderSet = new Set([
+  'pizza',
+  'pasta',
+  'risotto',
+  'pizza',
+  'pizza',
+  'risotto',
+  'pasta',
+]);
+console.log(orderSet);
+
+const j = 'Jonas';
+console.log(new Set(j));
+console.log(orderSet.size);
+console.log(orderSet.has('pizza'));
+console.log(orderSet.has('bread'));
+orderSet.add('Garlic Bread');
+orderSet.add('Garlic Bread');
+console.log(orderSet);
+// nao temos como recuperar um valor unico de um Set, como fazemos com um array. Ou seja, nao temos como colocar orderSet[0] e trazer o valor.
+// orderSet.clear(); // limpa todo o Set.
+for (const order of orderSet) {
+  console.log(order);
+}
+// um excelente uso para sets é para remover valores duplicados de um array
+// exemplo
+const staff = ['waiter', 'chef', 'waiter', 'cleaner', 'manager'];
+const uniqueStaff = [...new Set(staff)];
+console.log(uniqueStaff);
+for (const position of uniqueStaff) {
+  console.log(position);
+}
+
+const eu = 'Lassalvia';
+console.log(new Set(eu).size); // vai retornaer somente as letras unicas - total = 6
+
+// =============================================================================================================== //
+// ==== MAPS ==== //
+// Nos objetos as chaves devem sempre ser strings. Os maps são objetos em que as chaves podem assumir qualquer type de dado
+const restaurante = new Map();
+restaurante.set('name', 'Restaurante Italiano');
+restaurante.set(1, 'Firenze, Italy');
+restaurante.set(2, 'Lisbon, Portugal');
+restaurante
+  .set('categories', ['italian', 'pizzeria', 'organic'])
+  .set('open', 11)
+  .set('close', 23)
+  .set(true, 'we are open')
+  .set(false, 'we are closed');
+console.log(restaurante.get('name'));
+console.log(restaurante.get('categories'));
+console.log(restaurante.get(true));
+console.log(restaurante.get(1));
+
+const time = 12;
+console.log(
+  restaurante.get(
+    time > restaurante.get('open') && time < restaurante.get('close')
+  )
+);
+restaurante.delete(2); // deletamos o endereco de lisboa
+console.log(restaurante);
+restaurante.clear(); // apaga tudo
+console.log(restaurante.size);
+restaurante.set(document.querySelector('h1'), 'heading');
+console.log(restaurante);
+
+// =============================================================================================================== //
+// ==== MAPS ITERATION ==== //
+const question = new Map([
+  ['question', 'What is the best language to learn?'],
+  [1, 'C'],
+  [2, 'Java'],
+  [3, 'JavaScript'],
+  ['correct', 3],
+  [true, 'Congratulation! 🤲🏻'],
+  [false, 'Try again'],
+]);
+
+// converter objeto para Map
+console.log(Object.entries(openingHours));
+const hoursMap = new Map(Object.entries(openingHours));
+console.log(hoursMap);
+
+// Quizz app
+console.log(question.get('question'));
+
+for (const [key, value] of question) {
+  if (typeof key === 'number') {
+    console.log(`Answer ${key}: ${value}`);
+  }
+}
+
+const answer = 3;
+// const answer = Number(prompt('Answer:'));
+console.log(question.get(question.get('correct') === answer));
+
+// converter Map para array
+console.log([...question]);
+console.log(question.entries());
+console.log([...question.keys()]);
+console.log(question.values());
